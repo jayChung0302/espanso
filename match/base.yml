@@ -1,0 +1,157 @@
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ";sys"
+    replace: "import sys; sys.exit()"
+  - trigger: ";ct"
+    replace: "from datetime import datetime; exp_name = datetime.now().strftime('%y%m%d_%H%M%S')"
+  - trigger: ";dump"
+    replace: "with open('temp', mode='wb') as f:\npickle.dump(temp, f)"
+  - trigger: ";load"
+    replace: "with open('temp.pkl', 'rb') as f:\ntemp = pickle.load(f)"
+  - trigger: ";ttime"
+    replace: "# ;time\np_time = time.time() - start_time\nh = p_time//3600 # h\nm = int((p_time-h*3600)//60) # m\ns = p_time-(h*3600)-(m*60)\nprint(f'elapsed: {h}h {m}m {s:.2f}sec')"
+  - trigger: ";date"
+    replace: "now = datetime.now(); cur_date = now.strftime('%y%m%d-%H-%M')"
+  - trigger: ";func"
+    replace: "def foo(arg1, arg2):\n    return arg1, arg2"
+  - trigger: ";dcp"
+    replace: "docker cp tmp_container:/code/ ."
+  - trigger: ";debug"
+    replace: "from IPython import embed; embed()"
+  - trigger: ";scp"
+    replace: "sudo scp -r gsc@192.168.2.203:/media/ ."
+  - trigger: ";tb"
+    replace: "tensorboard --logdir=runs --port 6007 --host 0.0.0.0"
+  - trigger: ";main"
+    replace: "if __name__ == '__main__': \n"
+  - trigger: ";yam"
+    replace: "import yaml\nwith open('data.yaml', 'w') as file:\n    yaml.dump(data, file)"
+  - trigger: ";dir"
+    replace: "/media/4tb/gsc/R3D/"
+  - trigger: ";data"
+    replace: "/media2/4tb/"
+  - trigger: ";choice"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: choice
+        params:
+          values:
+            - "Every moment is a fresh beginning."
+            - "Everything you can imagine is real."
+            - "Whatever you do, do it well."
+
+  - trigger: ";ho"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: random
+        params:
+          choices:
+            - "안녕하세요!"
+            - "안녕하신가요!"
+            - "안녕하세요."
+            - "Hi."
+            - "안녕하세요.."
+
+  - trigger: ";time"
+    replace: "{{mytime}}"
+    vars:
+      - name: mytime
+        type: date
+        params:
+          format: "%x %H:%M"
+          locale: "en-US"
+
+  - trigger: ";href"
+    replace: "<a href='{{clipb}}' />$|$</a>"
+    vars:
+      - name: "clipb"
+        type: "clipboard"
+
+  # python script 실행.. 미침
+  - trigger: ":pyscript"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python
+            - /path/to/your/script.py
+
+
+  # shell command 실행하고 결과값 가져옴.. 미침
+  - trigger: ";getip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "curl 'https://api.ipify.org'"
+          debug: true
+
+  - trigger: ";ob-push"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "/run/user/1000/gvfs/sftp:host=61.74.118.114,user=nate/home/nate/workspace/ob-push.sh"
+          debug: true
+
+  - trigger: ";ob-pull"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "/run/user/1000/gvfs/sftp:host=61.74.118.114,user=nate/home/nate/workspace/ob-pull.sh"
+          debug: true
+
+  - trigger: ";test"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "/run/user/1000/gvfs/sftp:host=61.74.118.114,user=nate/home/nate/workspace/foo.sh"
+          debug: true
+ 
+
+
+
+
+
+  # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
+
+  # But matches can also be dynamic:
+
+  # Print the current date
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  # Print the output of a shell command
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo 'Hello from your shell'"
+
+  # And much more! For more information, visit the docs: https://espanso.org/docs/
