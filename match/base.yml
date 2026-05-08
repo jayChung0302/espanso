@@ -9,6 +9,10 @@
 # it gets replaced by the "replace" string.
 matches:
   # Simple text replacement
+  #
+  - trigger: ";one"
+    replace: "에 대해 한문장으로, 중학생이 이해할 수 있도록 설명해줘."
+ 
   - trigger: ";sys"
     replace: "import sys; sys.exit()"
   - trigger: ";ct"
