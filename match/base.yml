@@ -12,7 +12,8 @@ matches:
   #
   - trigger: ";one"
     replace: "에 대해 한문장으로, 중학생이 이해할 수 있도록 설명해줘."
- 
+  - trigger: ";disk"
+    replace: "du -ah . --max-depth=1 | sort -rh | head -n 11"
   - trigger: ";sys"
     replace: "import sys; sys.exit()"
   - trigger: ";ct"
